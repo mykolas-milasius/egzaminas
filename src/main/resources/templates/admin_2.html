@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
+	<link rel="stylesheet" href="styles.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
@@ -15,95 +16,92 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 		<script>
 		$(document).ready(function()
-           {
-   			var dialog_prideti, form_prideti;
-   			//Pridejimas
-               dialog_prideti = $( "#div_sukurti" ).dialog(
-               {
-                   autoOpen: false,
-                   height: 300,
-                   width: 300,
-                   modal: true,
-                   buttons:
-                   {
-                       "Patvirtinti": sukurtiFilma,
-                       Cancel: function()
-                       {
-                       	dialog_prideti.dialog( "close" ); 
-                       }
-                   }
-               });
-   			
-               $( "#button_sukurti" ).button().on( "click", function()
-               {
-               	dialog_prideti.dialog( "open" );
-               });
-               
-               form_prideti = dialog_prideti.find( "form" );
-               
-   		    function sukurtiFilma()
-   		    {
-   		        $("#sukurimo_forma").submit();
-   		    }
-   		    // Redagavimas 
-   		    $( ".edit" ).each ( function()
-   		    {
-   		    	$( this ).button().click ( function()
-   		    	{
-   		    		id_filmo = $( this ).data ( 'el_id' );
-   		    		
-   					$.ajax(
-   					{
-  						 method: 'POST'
-  				 		 , url: '/filmai_2'
-  				 		 , data:
-  				 		 	{	
-  				 		 		id: id_filmo
-   				 		}		
-   					}).done( function( data )
+		{
+  			var dialog_prideti, form_prideti;
+  			//Pridejimas
+              dialog_prideti = $( "#div_sukurti" ).dialog(
+              {
+                  autoOpen: false,
+                  height: 300,
+                  width: 300,
+                  modal: true,
+                  buttons:
+                  {
+                      "Patvirtinti": sukurtiKategorija,
+                      Cancel: function()
+                      {
+                      	dialog_prideti.dialog( "close" ); 
+                      }
+                  }
+              });
+  			
+              $( "#button_sukurti" ).button().on( "click", function()
+              {
+              	dialog_prideti.dialog( "open" );
+              });
+              
+              form_prideti = dialog_prideti.find( "form" );
+              
+  		    function sukurtiKategorija()
+  		    {
+  		        $("#sukurimo_forma").submit();
+  		    }
+  		    // Redagavimas 
+  		    $( ".edit" ).each ( function()
+  		    {
+  		    	$( this ).button().click ( function()
+  		    	{
+  		    		id = $( this ).data ( 'el_id' );
+  		    		
+  					$.ajax(
+  					{
+ 						 method: 'POST'
+ 				 		 , url: '/kategorijos_3'
+ 				 		 , data:
+ 				 		 	{	
+ 				 		 		id: id
+  				 		}		
+  					}).done( function( data )
+  						{
+   						if ( data != null )
    						{
-    						if ( data != null )
-    						{
-    							$( '#id').val ( data.id );
-    							$( '#pav' ).val ( data.pavadinimas );
-    							$( '#aprasymas' ).val ( data.aprasymas );
-    							$( '#kat' ).val ( data.kat );
-    							$( '#rei' ).val ( data.rei );
-    							dialog_prideti.dialog( "open" );				
-   							}
-   				  	});			    		
-   		    	});			    
-   		    });
-   		    //Pašalinimas
-   		    var dialog_salinti;
-   		    
-   		    dialog_salinti = $( "#salinti_uzsakyma" ).dialog(
-               {
-                   autoOpen: false,
-                   height: 450,
-                   width: 450,
-                   modal: true,
-                   buttons:
-                   {
-                       "Pašalinti": function()
-                       {
-                       	dialog_salinti.dialog( "close" );
-       					$( '#salinimo_forma' ).submit();
-                       },
-                       Cancel: function()
-                       {
-                       	dialog_salinti.dialog( "close" ); 
-                       }
-                   }
-               });
-   		    
-   		    $('.delete').button().on('click', function() // +
-    		{
-   		    	id_filmo = $( this ).data ( 'el_id' );
-	    		$('#id_filmo').val(id_filmo);
-				dialog_salinti.dialog("open");
-    		})
-	  });
+   							$( '#id').val ( data.id );
+   							$( '#pav' ).val ( data.pavadinimas );
+   							dialog_prideti.dialog( "open" );				
+  							}
+  				  	});			    		
+  		    	});			    
+  		    });
+  		    //Pašalinimas
+  		    var dialog_salinti;
+  		    
+  		    dialog_salinti = $( "#salinti_kategorija" ).dialog(
+              {
+                  autoOpen: false,
+                  height: 450,
+                  width: 450,
+                  modal: true,
+                  buttons:
+                  {
+                      "Pašalinti": function()
+                      {
+                      	dialog_salinti.dialog( "close" );
+      					$( '#salinimo_forma' ).submit();
+                      },
+                      Cancel: function()
+                      {
+                      	dialog_salinti.dialog( "close" ); 
+                      }
+                  }
+              });
+  		    
+  		    $('.delete').button().on('click', function() // +
+   		{
+  		    	id_kategorijos = $( this ).data ( 'el_id' );
+    		$('#id_kategorijos').val(id_kategorijos);
+			dialog_salinti.dialog("open");
+   		})
+  });
 	</script>
 	<script>
 	function searchTable() {
@@ -161,20 +159,14 @@
 	    <form method="post" action="" id="sukurimo_forma">
 			<label for="pav">Pavadinimas</label>
 			<input type="text" id="pav" name="pav" value="">
-			<label for="kaina">Aprašymas</label>		
-			<input type="text" id="aprasymas" name="aprasymas" value="">
-			<label for="pav">Kategorija</label>
-			<input type="text" id="kat" name="kat" value="">
-			<label for="pav">Reitingas</label>
-			<input type="text" id="rei" name="rei" value="">
 			<input type="hidden" id="id" name="id" value="0">
 	        <input type="hidden" name="prideti_name" value="prideti">
 		 </form>
 	</div>
-	   <div id="salinti_uzsakyma">
-	        <form method="post" action="/salinti-filma-admin" id="salinimo_forma">
+	   <div id="salinti_kategorija">
+	        <form method="post" action="/salinti-kat-admin" id="salinimo_forma">
 	        	 <h3>Ar tikrai norite ištrinti pasirinktą filmą?</h3>
-	            <input type="hidden" name="id_filmo" id="id_filmo" value="0">
+	            <input type="hidden" name="id_kategorijos" id="id_kategorijos" value="0">
 	            <input type="hidden" name="salinti" value="salinti">
 	        </form>
 	   </div>	
@@ -182,20 +174,14 @@
 		<input id='myInput' onkeyup='searchTable()' type='text' placeholder="Ieškoti filmo">
 		<table  id='myTable'>
 			<tr>
-				<td>Filmo pavadinimas</td>
-				<td>Aprašas</td>
-				<td>Kategorija</td>
-				<td>Reitingas</td>
+				<td>Kategorijos pavadinimas</td>
 				<td>Redaguoti</td>
 				<td>Pašalinti</td>
 			</tr>
-			<tr th:each="filmas : ${filmai}">
-				<td th:text="${filmas.getPavadinimas()}"></td>			
-				<td th:text="${filmas.getAprasas()}"></td>
-				<td th:text="${filmas.getReitingas()}"></td>
-				<td th:text="${filmas.getKategorija()}"></td>
-				<td><input type="button" class="edit" th:attr="data-el_id=${filmas.getId()}" value="redaguoti"></td>			
-				<td><input type="button" class="delete" th:attr="data-el_id=${filmas.getId()}" value="pašalinti"></td>
+			<tr th:each="kategorija : ${kategorijos}">
+				<td th:text="${kategorija.getPavadinimas()}"></td>			
+				<td><input type="button" class="edit" th:attr="data-el_id=${kategorija.getId()}" value="redaguoti"></td>			
+				<td><input type="button" class="delete" th:attr="data-el_id=${kategorija.getId()}" value="pašalinti"></td>
 			</tr>
 		</table>
 	</div>

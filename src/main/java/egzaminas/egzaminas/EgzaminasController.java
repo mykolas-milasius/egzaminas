@@ -273,4 +273,69 @@ public class EgzaminasController
 		}
 		return "redirect:kategorijos";
 	}
+	// admin kategorijos
+	
+	@RequestMapping(path="/admin_2", method={ RequestMethod.GET, RequestMethod.POST })
+	public String admin_2(
+		@RequestParam(name="id", required=false, defaultValue="0") Integer id 
+		, @RequestParam(name="pav", required=false, defaultValue="") String pav
+		, @RequestParam(name="prideti_name", required=false, defaultValue="neprideti") String prideti
+		, Model model)
+	{
+		Kategorija kat = new Kategorija();
+		if(prideti.equals("prideti"))
+		{
+			Optional <Kategorija> found = kategorija_repository.findById(id);
+			
+			if(found.isPresent())
+			{
+				kat = found.get();
+				kat.setId(id);
+			}
+	
+			kat.setPavadinimas(pav);
+			
+			kategorija_repository.save(kat);
+		}
+		
+		model.addAttribute("kategorijos", kategorija_repository.findAll() );
+		
+		return "admin_2";
+	}
+	
+	@RequestMapping(path="/kategorijos_3")	
+	public @ResponseBody Kategorija kateDuom(@RequestParam(name="id", required=true, defaultValue="0") Integer id ) throws IOException {
+		
+		Kategorija kat = new Kategorija();
+		
+		if (id > 0)
+		{
+			Optional <Kategorija> found = kategorija_repository.findById( id );
+		
+			if (found.isPresent())
+			{
+				kat = found.get();
+				kat.setId ( id );
+			}
+		}
+		return kat;
+	}
+	
+	@RequestMapping(path="/salinti-kat-admin")
+	public String salintiKatAdmin (
+			@RequestParam Integer id_kategorijos,
+			@RequestParam(name="", required=false, defaultValue="") String salinti
+			)
+	{
+		if(salinti.equals("salinti"))
+		{
+			Optional <Kategorija> found = kategorija_repository.findById( id_kategorijos );
+			if (found.isPresent())
+			{
+				   Kategorija n = found.get();
+				   kategorija_repository.deleteById(id_kategorijos);
+			}
+		}
+		return "redirect:admin_2";
+	}
 }
