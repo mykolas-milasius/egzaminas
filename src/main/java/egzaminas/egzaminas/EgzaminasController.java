@@ -239,7 +239,7 @@ public class EgzaminasController
 	}
 	
 	@RequestMapping(path="/kategorijos_2")	
-	public @ResponseBody Kategorija katDuom(@RequestParam(name="id_kategorijos", required=true, defaultValue="0") Integer id ) throws IOException {
+	public @ResponseBody Kategorija katDuom(@RequestParam(name="id", required=true, defaultValue="0") Integer id ) throws IOException {
 		
 		Kategorija kat = new Kategorija();
 		

@@ -73,15 +73,15 @@
    		    {
    		    	$( this ).button().click ( function()
    		    	{
-   		    		id_kategorijos = $( this ).data ( 'el_id' );
+   		    		id = $( this ).data ( 'el_id' );
    		    		
    					$.ajax(
    					{
   						 method: 'POST'
-  				 		 , url: '//kategorijos_2'
+  				 		 , url: '/kategorijos_2'
   				 		 , data:
   				 		 	{	
-  				 		 		id: id_kategorijos
+  				 		 		id: id
    				 		}		
    					}).done( function( data )
    						{
@@ -136,7 +136,8 @@
 				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='pagrindinis';">Pagrindinis</button>
 				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='filmai';">Filmų sąrašas</button>
 				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='kategorijos';">Kategorijos</button>
-				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='admin';">Admin</button>
+				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='admin';">Admin Filmų sąrašas</button>
+				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='admin_2';">Admin Kategorijos</button>
 			</nav>
 		</div>
 		<div class="col-4 justify-content-end">
