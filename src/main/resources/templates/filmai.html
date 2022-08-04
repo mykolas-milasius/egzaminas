@@ -164,7 +164,12 @@
 			<label for="kaina">Aprašymas</label>		
 			<input type="text" id="aprasymas" name="aprasymas" value="">
 			<label for="pav">Kategorija</label>
-			<input type="text" id="kat" name="kat" value="">
+			<select name="kat" id="kat">
+				<option value="Dokumentika">Dokumentika</option>
+				<option value="Biografija">Biografija</option>
+				<option value="Fantastika">Fantastika</option>
+				<option value="Veiksmo">Veiksmo</option>
+			</select>
 			<label for="pav">Reitingas</label>
 			<input type="text" id="rei" name="rei" value="">
 			<input type="hidden" id="id" name="id" value="0">
@@ -186,8 +191,8 @@
 			<tr>
 				<td>Filmo pavadinimas</td>
 				<td>Aprašas</td>
-				<td>Kategorija</td>
 				<td>Reitingas</td>
+				<td>Kategorija</td>
 				<td>Redaguoti</td>
 				<td>Pašalinti</td>
 			</tr>
