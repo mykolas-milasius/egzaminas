@@ -49,7 +49,7 @@
                    modal: true,
                    buttons:
                    {
-                       "Patvirtinti": sukurtiFilma,
+                       "Patvirtinti": sukurtiKategorija,
                        Cancel: function()
                        {
                        	dialog_prideti.dialog( "close" ); 
@@ -64,7 +64,7 @@
                
                form_prideti = dialog_prideti.find( "form" );
                
-   		    function sukurtiFilma()
+   		    function sukurtiKategorija()
    		    {
    		        $("#sukurimo_forma").submit();
    		    }
@@ -73,15 +73,15 @@
    		    {
    		    	$( this ).button().click ( function()
    		    	{
-   		    		id_filmo = $( this ).data ( 'el_id' );
+   		    		id_kategorijos = $( this ).data ( 'el_id' );
    		    		
    					$.ajax(
    					{
   						 method: 'POST'
-  				 		 , url: '/filmai_2'
+  				 		 , url: '//kategorijos_2'
   				 		 , data:
   				 		 	{	
-  				 		 		id: id_filmo
+  				 		 		id: id_kategorijos
    				 		}		
    					}).done( function( data )
    						{
@@ -89,9 +89,6 @@
     						{
     							$( '#id').val ( data.id );
     							$( '#pav' ).val ( data.pavadinimas );
-    							$( '#aprasymas' ).val ( data.aprasymas );
-    							$( '#kat' ).val ( data.kat );
-    							$( '#rei' ).val ( data.rei );
     							dialog_prideti.dialog( "open" );				
    							}
    				  	});			    		
@@ -100,7 +97,7 @@
    		    //Pašalinimas
    		    var dialog_salinti;
    		    
-   		    dialog_salinti = $( "#salinti_filma" ).dialog(
+   		    dialog_salinti = $( "#salinti_kategorija" ).dialog(
                {
                    autoOpen: false,
                    height: 450,
@@ -122,8 +119,8 @@
    		    
    		    $('.delete').button().on('click', function() // +
     		{
-   		    	id_filmo = $( this ).data ( 'el_id' );
-	    		$('#id_filmo').val(id_filmo);
+   		    	id_kategorijos = $( this ).data ( 'el_id' );
+	    		$('#id_kategorijos').val(id_kategorijos);
 				dialog_salinti.dialog("open");
     		})
 	  });
@@ -138,6 +135,7 @@
 			<nav>
 				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='pagrindinis';">Pagrindinis</button>
 				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='filmai';">Filmų sąrašas</button>
+				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='kategorijos';">Kategorijos</button>
 				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='admin';">Admin</button>
 			</nav>
 		</div>
@@ -158,43 +156,30 @@
 	    <form method="post" action="" id="sukurimo_forma">
 			<label for="pav">Pavadinimas</label>
 			<input type="text" id="pav" name="pav" value="">
-			<label for="kaina">Aprašymas</label>		
-			<input type="text" id="aprasymas" name="aprasymas" value="">
-			<label for="pav">Kategorija</label>
-			<input type="text" id="kat" name="kat" value="">
-			<label for="pav">Reitingas</label>
-			<input type="text" id="rei" name="rei" value="">
 			<input type="hidden" id="id" name="id" value="0">
 	        <input type="hidden" name="prideti_name" value="prideti">
 		 </form>
 	</div>
-    <div id="salinti_filma">
-         <form method="post" action="/salinti-filma" id="salinimo_forma">
-         	 <h3>Ar tikrai norite ištrinti pasirinktą filmą?</h3>
-             <input type="hidden" name="id_filmo" id="id_filmo" value="0">
+    <div id="salinti_kategorija">
+         <form method="post" action="/salinti-kat" id="salinimo_forma">
+         	 <h3>Ar tikrai norite ištrinti pasirinktą kategoriją?</h3>
+             <input type="hidden" name="id_kategorijos" id="id_kategorijos" value="0">
              <input type="hidden" name="salinti" value="salinti">
          </form>
     </div>
 	<div class="row align-items-center">
-		<button id="button_sukurti" style="height:50px; width:200px">Sukurti filmą</button>
-		<button id="button_sukurti_kategorija" style="height:50px; width:200px">Sukurti filmų kategoriją</button>
+		<button id="button_sukurti" style="height:50px; width:200px">Sukurti filmų kategoriją</button>
 		<input id='myInput' onkeyup='searchTable()' type='text' placeholder="Ieškoti filmo">
 		<table  id='myTable'>
 			<tr>
-				<td>Filmo pavadinimas</td>
-				<td>Aprašas</td>
-				<td>Kategorija</td>
-				<td>Reitingas</td>
+				<td>Kategorijos pavadinimas</td>
 				<td>Redaguoti</td>
 				<td>Pašalinti</td>
 			</tr>
-			<tr th:each="filmas : ${filmai}">
-				<td th:text="${filmas.getPavadinimas()}"></td>			
-				<td th:text="${filmas.getAprasas()}"></td>
-				<td th:text="${filmas.getReitingas()}"></td>
-				<td th:text="${filmas.getKategorija()}"></td>
-				<td><input type="button" class="edit" th:attr="data-el_id=${filmas.getId()}" value="redaguoti"></td>			
-				<td><input type="button" class="delete" th:attr="data-el_id=${filmas.getId()}" value="pašalinti"></td>
+			<tr th:each="kategorija : ${kategorijos}">
+				<td th:text="${kategorija.getPavadinimas()}"></td>			
+				<td><input type="button" class="edit" th:attr="data-el_id=${kategorija.getId()}" value="redaguoti"></td>			
+				<td><input type="button" class="delete" th:attr="data-el_id=${kategorija.getId()}" value="pašalinti"></td>
 			</tr>
 		</table>
 	</div>

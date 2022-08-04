@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         	.authorizeRequests()
             .antMatchers("/user").authenticated()
             .antMatchers("/filmai").access("hasRole('USER') or hasRole('ADMIN')")
+            .antMatchers("/kategorijos").access("hasRole('USER') or hasRole('ADMIN')")
             .antMatchers("/admin").hasRole("ADMIN")
             .anyRequest().permitAll()
             .and()

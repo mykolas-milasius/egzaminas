@@ -27,6 +27,12 @@ public class EgzaminasController
 	@Autowired
 	private FilmsRepository films_repository;
 	
+	@Autowired
+	private KategorijaRepository kategorija_repository;
+	
+	@Autowired
+	private FilmsKategorijaRepository films_kategorija_repository;
+	
 	@RequestMapping(path="/pagrindinis") 
 	public String home(Model model)
 	{
@@ -134,6 +140,7 @@ public class EgzaminasController
 			
 			films_repository.save(film);
 		}
+		
 		model.addAttribute("filmai", films_repository.findAll() );
 		
 		return "filmai";
@@ -201,5 +208,69 @@ public class EgzaminasController
 	{
 		model.addAttribute("filmai", films_repository.findAll() );
 		return "redirect:filmas1?i="+id;
+	}
+	
+	@RequestMapping(path="/kategorijos", method={ RequestMethod.GET, RequestMethod.POST })
+	public String kategorijos(
+		@RequestParam(name="id", required=false, defaultValue="0") Integer id 
+		, @RequestParam(name="pav", required=false, defaultValue="") String pav
+		, @RequestParam(name="prideti_name", required=false, defaultValue="neprideti") String prideti
+		, Model model)
+	{
+		Kategorija kat = new Kategorija();
+		if(prideti.equals("prideti"))
+		{
+			Optional <Kategorija> found = kategorija_repository.findById(id);
+			
+			if(found.isPresent())
+			{
+				kat = found.get();
+				kat.setId(id);
+			}
+	
+			kat.setPavadinimas(pav);
+			
+			kategorija_repository.save(kat);
+		}
+		
+		model.addAttribute("kategorijos", kategorija_repository.findAll() );
+		
+		return "kategorijos";
+	}
+	
+	@RequestMapping(path="/kategorijos_2")	
+	public @ResponseBody Kategorija katDuom(@RequestParam(name="id_kategorijos", required=true, defaultValue="0") Integer id ) throws IOException {
+		
+		Kategorija kat = new Kategorija();
+		
+		if (id > 0)
+		{
+			Optional <Kategorija> found = kategorija_repository.findById( id );
+		
+			if (found.isPresent())
+			{
+				kat = found.get();
+				kat.setId ( id );
+			}
+		}
+		return kat;
+	}
+	
+	@RequestMapping(path="/salinti-kat")
+	public String salintiKat (
+			@RequestParam Integer id_kategorijos,
+			@RequestParam(name="", required=false, defaultValue="") String salinti
+			)
+	{
+		if(salinti.equals("salinti"))
+		{
+			Optional <Kategorija> found = kategorija_repository.findById( id_kategorijos );
+			if (found.isPresent())
+			{
+				   Kategorija n = found.get();
+				   kategorija_repository.deleteById(id_kategorijos);
+			}
+		}
+		return "redirect:kategorijos";
 	}
 }
