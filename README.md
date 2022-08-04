@@ -3,6 +3,9 @@ kompetencijų praktinės dalies (gebėjimų) vertinimo užduotis
 
 GITHUB: https://github.com/mykolas-milasius/egzaminas
 
+Įsiimportinti duomenų bazę "egzaminas.sql" ir paleisti programą.
+Apačioje rašomi administratoriaus ir user'io prisijungimo duomenys.
+
 ADMIN
 El. paštas: admin@admin.lt
 Slaptažodis: adminn

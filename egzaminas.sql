@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 04, 2022 at 11:41 AM
+-- Generation Time: Aug 04, 2022 at 12:12 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -40,8 +40,9 @@ CREATE TABLE `films` (
 --
 
 INSERT INTO `films` (`id`, `pavadinimas`, `aprasas`, `reitingas`, `kategorija`) VALUES
-(11, 'Žiedų valdovas', 'LOTR', '100', 'Fanstastiniai filmai'),
-(12, 'Star wars', 'pew pew pew', '99', 'Fanstastiniai filmai');
+(11, 'Žiedų valdovas', 'LOTR', '100', 'Fantastika'),
+(12, 'Star wars', 'test', '100', 'Fantastika'),
+(13, 'Betmenas', 'Betmeno filmas gi', '100', 'Veiksmo');
 
 -- --------------------------------------------------------
 
@@ -79,9 +80,10 @@ CREATE TABLE `kategorija` (
 --
 
 INSERT INTO `kategorija` (`id`, `pavadinimas`) VALUES
-(1, 'Fantastiniai'),
+(1, 'Fantastika'),
 (2, 'Dokumentika'),
-(10, 'Biografiniai');
+(10, 'Biografija'),
+(13, 'Veiksmo');
 
 -- --------------------------------------------------------
 
@@ -199,7 +201,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `films`
 --
 ALTER TABLE `films`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `films_kategorija`
@@ -211,7 +213,7 @@ ALTER TABLE `films_kategorija`
 -- AUTO_INCREMENT for table `kategorija`
 --
 ALTER TABLE `kategorija`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `roles`
