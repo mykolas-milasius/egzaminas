@@ -187,13 +187,13 @@
 				<td>Redaguoti</td>
 				<td>Pašalinti</td>
 			</tr>
-			<tr th:each="film : ${films}">
-				<td th:text="${film.getPavadinimas()}"></td>			
-				<td th:text="${film.getAprasas()}"></td>
-				<td th:text="${film.getReitingas()}"></td>
-				<td th:text="${film.getKategorija()}"></td>
-				<td><input type="button" class="edit" th:attr="data-el_id=${film.getId()}" value="redaguoti"></td>			
-				<td><input type="button" class="delete" th:attr="data-el_id=${film.getId()}" value="pašalinti"></td>
+			<tr th:each="filmas : ${filmai}">
+				<td th:text="${filmas.getPavadinimas()}"></td>			
+				<td th:text="${filmas.getAprasas()}"></td>
+				<td th:text="${filmas.getReitingas()}"></td>
+				<td th:text="${filmas.getKategorija()}"></td>
+				<td><input type="button" class="edit" th:attr="data-el_id=${filmas.getId()}" value="redaguoti"></td>			
+				<td><input type="button" class="delete" th:attr="data-el_id=${filmas.getId()}" value="pašalinti"></td>
 			</tr>
 		</table>
 	</div>

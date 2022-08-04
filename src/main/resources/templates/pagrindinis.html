@@ -74,11 +74,11 @@
 				<td>Kategorija</td>
 				<td>Reitingas</td>
 			</tr>
-			<tr th:each="film : ${films}">
-				<td th:text="${film.getPavadinimas()}"></td>			
-				<td th:text="${film.getAprasas()}"></td>
-				<td th:text="${film.getReitingas()}"></td>
-				<td th:text="${film.getKategorija()}"></td>
+			<tr th:each="filmas : ${filmai}">
+				<td th:text="${filmas.getPavadinimas()}"></td>			
+				<td th:text="${filmas.getAprasas()}"></td>
+				<td th:text="${filmas.getReitingas()}"></td>
+				<td th:text="${filmas.getKategorija()}"></td>
 			</tr>
 		</table>
 	</div>

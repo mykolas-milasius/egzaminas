@@ -24,14 +24,16 @@ public class EgzaminasController
 	private FilmsRepository films_repository;
 	
 	@RequestMapping(path="/pagrindinis") 
-	public String home()
+	public String home(Model model)
 	{
+		model.addAttribute("filmai", films_repository.findAll() );
 		return "pagrindinis";
 	}
 	
 	@RequestMapping("/")
-	public String home_2()
+	public String home_2(Model model)
 	{
+		model.addAttribute("filmai", films_repository.findAll() );
 		return "pagrindinis";
 	}
 	
@@ -67,22 +69,41 @@ public class EgzaminasController
 	    return "login";
 	}
 	
-	@RequestMapping(path="/admin")
-	public String admin()
+	@RequestMapping(path="/admin", method={ RequestMethod.GET, RequestMethod.POST })
+	public String admin_prid(
+	@RequestParam(name="id", required=false, defaultValue="0") Integer id 
+	, @RequestParam(name="pav", required=false, defaultValue="") String pav
+	, @RequestParam(name="aprasymas", required=false, defaultValue="") String aprasymas
+	, @RequestParam(name="rei", required=false, defaultValue="") String reitingas
+	, @RequestParam(name="kat", required=false, defaultValue="nesaugoti") String kategorija
+	, @RequestParam(name="prideti_name", required=false, defaultValue="neprideti") String prideti
+	, Model model)
 	{
+		Films film = new Films();
+		if(prideti.equals("prideti"))
+		{
+			Optional <Films> found = films_repository.findById(id);
+			
+			if(found.isPresent())
+			{
+				film = found.get();
+				film.setId(id);
+			}
+	
+			film.setPavadinimas(pav);
+			film.setAprasas(aprasymas);
+			film.setReitingas(reitingas);
+			film.setKategorija(kategorija);
+			
+			films_repository.save(film);
+		}
+		model.addAttribute("filmai", films_repository.findAll() );
+		
 		return "admin";
 	}
 	
-	@RequestMapping(path="/filmai")
-	public String filmai(Model model)
-	{
-		model.addAttribute("film", films_repository.findAll() );
-		
-		return "filmai";
-	}
-	
-	@RequestMapping(path="/filmai_prideti", method={ RequestMethod.GET, RequestMethod.POST })
-	public String filmai_prideti(
+	@RequestMapping(path="/filmai", method={ RequestMethod.GET, RequestMethod.POST })
+	public String filmai(
 		@RequestParam(name="id", required=false, defaultValue="0") Integer id 
 		, @RequestParam(name="pav", required=false, defaultValue="") String pav
 		, @RequestParam(name="aprasymas", required=false, defaultValue="") String aprasymas
@@ -109,7 +130,7 @@ public class EgzaminasController
 			
 			films_repository.save(film);
 		}
-		model.addAttribute("film", films_repository.findAll() );
+		model.addAttribute("filmai", films_repository.findAll() );
 		
 		return "filmai";
 	}
@@ -133,7 +154,7 @@ public class EgzaminasController
 	}
 	
 	@RequestMapping(path="/salinti-filma")
-	public String salintiTiekeja (
+	public String salintiFilma (
 			@RequestParam Integer id_filmo,
 			@RequestParam(name="", required=false, defaultValue="") String salinti
 			)
@@ -149,6 +170,26 @@ public class EgzaminasController
 		}
 		return "redirect:filmai";
 	}
+	
+	@RequestMapping(path="/salinti-filma-admin")
+	public String salintiFilma_2 (
+			@RequestParam Integer id_filmo,
+			@RequestParam(name="", required=false, defaultValue="") String salinti
+			)
+	{
+		if(salinti.equals("salinti"))
+		{
+			Optional <Films> found = films_repository.findById( id_filmo );
+			if (found.isPresent())
+			{
+				   Films n = found.get();
+				   films_repository.deleteById(id_filmo);
+			}
+		}
+		return "redirect:admin";
+	}
+	
+	
 	
 /*
 	@RequestMapping(path="/ugdymo_istaiga_redaguoti")	
