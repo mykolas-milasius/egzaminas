@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import bandymas_databases.bandymas.Menu;
+import bandymas_databases.bandymas.Uzsakymai;
+import bandymas_databases.bandymas.UzsakymaiPrekes;
 import egzaminas.egzaminas.User;
 
 import org.springframework.stereotype.Controller;
@@ -189,42 +193,13 @@ public class EgzaminasController
 		return "redirect:admin";
 	}
 	
-	
-	
-/*
-	@RequestMapping(path="/ugdymo_istaiga_redaguoti")	
-	public @ResponseBody UgdymoIstaiga ugdymoIstaigosDuom(@RequestParam(name="id", required=true, defaultValue="0") Integer id ) throws IOException {
-		
-		UgdymoIstaiga ugdymo_istaiga = new UgdymoIstaiga();
-		
-		if (id > 0)
-		{
-			Optional <UgdymoIstaiga> found = ugdymo_istaiga_repository.findById( id );
-		
-			if (found.isPresent())
-			{
-				ugdymo_istaiga = found.get();
-				ugdymo_istaiga.setId ( id );
-			}
-		}
-		return ugdymo_istaiga;
-	}
-	
-	@RequestMapping(path="/salinti_istaiga")
-	public String salintiIstaiga (
-		@RequestParam Integer id_istaigos,
-		@RequestParam(name="", required=false, defaultValue="") String salinti)
+	@RequestMapping("/filmas1")
+	public String uzsakymas1(@RequestParam(name="i", required=true, defaultValue="0") String id
+			, @RequestParam(name="prideti_name", required=false, defaultValue="neprideti") String prideti
+			, Model model
+			)
 	{
-		if(salinti.equals("salinti"))
-		{
-			Optional <UgdymoIstaiga> found = ugdymo_istaiga_repository.findById( id_istaigos );
-			if (found.isPresent())
-			{
-				UgdymoIstaiga n = found.get();
-				ugdymo_istaiga_repository.deleteById(id_istaigos);
-			}
-		}
-		return "redirect:admin_prideti";
+		model.addAttribute("filmai", films_repository.findAll() );
+		return "redirect:filmas1?i="+id;
 	}
-	*/
 }
