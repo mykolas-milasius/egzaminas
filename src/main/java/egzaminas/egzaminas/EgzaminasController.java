@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import egzaminas.egzaminas.User;
-import pagrindinis.projektas.UgdymoIstaiga;
-import pagrindinis.projektas.UgdymoIstaigaRepository;
 
 import org.springframework.stereotype.Controller;
 
@@ -84,7 +82,7 @@ public class EgzaminasController
 	}
 	
 	@RequestMapping(path="/filmai_prideti", method={ RequestMethod.GET, RequestMethod.POST })
-	public String admin_prideti(
+	public String filmai_prideti(
 		@RequestParam(name="id", required=false, defaultValue="0") Integer id 
 		, @RequestParam(name="pav", required=false, defaultValue="") String pav
 		, @RequestParam(name="aprasymas", required=false, defaultValue="") String aprasymas
@@ -115,39 +113,44 @@ public class EgzaminasController
 		
 		return "filmai";
 	}
-	/*
-	@RequestMapping(path="/filmai_prideti", method={ RequestMethod.GET, RequestMethod.POST })
-	public String admin_prideti(
-		@RequestParam(name="id", required=false, defaultValue="0") Integer id 
-		, @RequestParam(name="pav", required=false, defaultValue="") String pav
-		, @RequestParam(name="kodas", required=false, defaultValue="") String kodas
-		, @RequestParam(name="adresas", required=false, defaultValue="") String adresas
-		, @RequestParam(name="saugoti", required=false, defaultValue="nesaugoti") String saugoti
-		, @RequestParam(name="prideti_name", required=false, defaultValue="neprideti") String prideti
-		, Model model)
-	{
-		UgdymoIstaiga ugdymo_istaiga = new UgdymoIstaiga();
-		if(prideti.equals("prideti"))
-		{
-			Optional <UgdymoIstaiga> found = ugdymo_istaiga_repository.findById(id);
-			
-			if(found.isPresent())
-			{
-				ugdymo_istaiga = found.get();
-				ugdymo_istaiga.setId(id);
-			}
 	
-			ugdymo_istaiga.setPavadinimas(pav);
-			ugdymo_istaiga.setKodas(kodas);
-			ugdymo_istaiga.setAdresas(adresas);
-			
-			ugdymo_istaiga_repository.save(ugdymo_istaiga);
+	@RequestMapping(path="/filmai_2")	
+	public @ResponseBody Films filmDuom(@RequestParam(name="id", required=true, defaultValue="0") Integer id ) throws IOException {
+		
+		Films film = new Films();
+		
+		if (id > 0)
+		{
+			Optional <Films> found = films_repository.findById( id );
+		
+			if (found.isPresent())
+			{
+				film = found.get();
+				film.setId ( id );
+			}
 		}
-		model.addAttribute("istaigos", ugdymo_istaiga_repository.findAll());
-			
-		return "admin_prideti";
+		return film;
 	}
 	
+	@RequestMapping(path="/salinti-filma")
+	public String salintiTiekeja (
+			@RequestParam Integer id_filmo,
+			@RequestParam(name="", required=false, defaultValue="") String salinti
+			)
+	{
+		if(salinti.equals("salinti"))
+		{
+			Optional <Films> found = films_repository.findById( id_filmo );
+			if (found.isPresent())
+			{
+				   Films n = found.get();
+				   films_repository.deleteById(id_filmo);
+			}
+		}
+		return "redirect:filmai";
+	}
+	
+/*
 	@RequestMapping(path="/ugdymo_istaiga_redaguoti")	
 	public @ResponseBody UgdymoIstaiga ugdymoIstaigosDuom(@RequestParam(name="id", required=true, defaultValue="0") Integer id ) throws IOException {
 		

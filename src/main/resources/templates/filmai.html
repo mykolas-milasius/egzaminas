@@ -78,9 +78,9 @@
    					$.ajax(
    					{
   						 method: 'POST'
-  				 		 , url: '/preke'
+  				 		 , url: '/filmai_2'
   				 		 , data:
-  				 		 	{
+  				 		 	{	
   				 		 		id: id_filmo
    				 		}		
    					}).done( function( data )
@@ -103,8 +103,8 @@
    		    dialog_salinti = $( "#salinti_uzsakyma" ).dialog(
                {
                    autoOpen: false,
-                   height: 300,
-                   width: 300,
+                   height: 450,
+                   width: 450,
                    modal: true,
                    buttons:
                    {
@@ -137,9 +137,8 @@
 		<div class="col-4" id="menu">
 			<nav>
 				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='pagrindinis';">Pagrindinis</button>
-				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='darbai';">--------</button>
-				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='employersRegister';">--------</button>
-				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='aboutUs';">--------</button>
+				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='filmai';">Filmų sąrašas</button>
+				  <button type = "button" class="btn btn-outline-primary" onClick="location.href='admin';">Admin</button>
 			</nav>
 		</div>
 		<div class="col-4 justify-content-end">
@@ -170,7 +169,7 @@
 		 </form>
 	</div>
     <div id="salinti_uzsakyma">
-         <form method="post" action="/salinti-preke" id="salinimo_forma">
+         <form method="post" action="/salinti-filma" id="salinimo_forma">
          	 <h3>Ar tikrai norite ištrinti pasirinktą filmą?</h3>
              <input type="hidden" name="id_filmo" id="id_filmo" value="0">
              <input type="hidden" name="salinti" value="salinti">
@@ -185,6 +184,8 @@
 				<td>Aprašas</td>
 				<td>Kategorija</td>
 				<td>Reitingas</td>
+				<td>Redaguoti</td>
+				<td>Pašalinti</td>
 			</tr>
 			<tr th:each="film : ${films}">
 				<td th:text="${film.getPavadinimas()}"></td>			
